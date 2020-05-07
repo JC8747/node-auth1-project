@@ -1,11 +1,11 @@
-const cryptic = require("cryptic");
+const bcrypt = require("bcryptjs");
 const router = require("express").Router();
 const Users = require("../users/users-model.js");
 
 router.post("/register", (req, res) => {
   const userInfo = req.body;
   const ROUNDS = process.env.HASHING_ROUNDS || 8;
-  const hash = cryptic.hashSync(userInfo.password, ROUNDS);
+  const hash = bcrypt.hashSync(userInfo.password, ROUNDS);
 
   userInfo.password = hash;
   Users.add(userInfo)
@@ -20,7 +20,7 @@ router.post("/login", (req, res) => {
 
   Users.findBy({ username })
     .then(([user]) => {
-      if (user && cryptic.compareSync(password, user.password)) {
+      if (user && bcrypt.compareSync(password, user.password)) {
         req.session.user = {
           id: user.id,
           username: user.username

@@ -13,11 +13,11 @@ const sessionConfig = {
   secret: "quack quack quack!",
   cookie: {
     maxAge: 1000 * 60 * 60,
-    secure: false, 
-    httpOnly: true 
+    secure: false,
+    httpOnly: true
   },
   resave: false,
-  saveUninitialized: true 
+  saveUninitialized: true
 };
 
 server.use(helmet());
@@ -29,7 +29,7 @@ server.use("/api/users", restricted, usersRouter);
 server.use("/api/auth", authRouter);
 
 server.get("/", (req, res) => {
-  res.json({ api: "API is up" });
+  res.json({ api: "API is Running" });
 });
 
 module.exports = server;
